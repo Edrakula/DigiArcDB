@@ -9,7 +9,6 @@ for instalisaiton need to run
 The repository includes an init.sql file to create the database and all required tables, functions, and stored procedures.
 
 # Run the SQL file to initialize the database
-mysql -u root -p < init.sql
 
 This will create the digi_arc database with tables: Users, Documents, Categories, Tags, Document_Access, Access_log, Versions, Public_Documents.
 
@@ -18,9 +17,11 @@ It also creates stored procedures: Create_Document, Update_Document, Get_All_Doc
 Functions like total_downloads are included.
 
 Initialization
+```python
 from digi_arc_db import DigiArcDB
 
 # Connect to the database
+
 db = DigiArcDB(
     host="localhost",
     user="root",
@@ -30,7 +31,7 @@ db = DigiArcDB(
 
 # Close the connection when done
 db.close()
-User Management
+
 # Create a new user
 db.create_user("alice", "alice@example.com")
 
@@ -42,7 +43,7 @@ user = db.get_user_from_id(1)
 
 # Get all users
 users = db.get_users()
-Category Management
+
 # Create a category
 db.create_category("Finance", "Documents related to finance")
 
@@ -55,7 +56,7 @@ db.remove_category(category_id=1)
 # Attach/detach a category to/from a document
 db.attach_category(document_id=2, category_id=1)
 db.detach_category(document_id=2)
-Tag Management
+
 # Create a tag
 db.create_tag("Important")
 
@@ -68,7 +69,7 @@ db.remove_tag(tag_id=1)
 # Attach/detach a tag to/from a document
 db.attach_tag(document_id=2, tag_id=1)
 db.detach_tag(document_id=2, tag_id=1)
-Document Management
+
 # Create a new document
 db.create_document(
     title="Project Plan",
@@ -100,7 +101,7 @@ versions = db.get_document_versions(document_id=1, user_id=1)
 
 # Download a document
 file_path = db.download_document(document_id=1, version_number=2, user_id=1)
-Access Control
+
 # Grant access to a document
 db.create_document_access(user_id=2, document_id=1, access_level="read")
 
@@ -109,7 +110,7 @@ db.remove_document_access(user_id=2, document_id=1, access_level="read")
 
 # Get access info for a document
 access_info = db.get_document_access_info(document_id=1, user_id=2)
-Logging and Activity
+
 # Log an access event manually
 db.log_access(user_id=1, document_id=1, version_id=2, access_type="download")
 
@@ -118,12 +119,13 @@ logs = db.get_access_logs_of_document(document_id=1)
 
 # Get all activity for a user
 activity = db.get_user_activity(user_id=1)
-Search and Downloads
+
 # Search documents by keyword
 results = db.search_documents("budget")
 
 # Get total downloads of a document
 downloads = db.total_downloads(document_id=1, user_id=1)
+```
 Notes
 
 Restricted documents require a valid user with the proper access level for viewing or downloading.
